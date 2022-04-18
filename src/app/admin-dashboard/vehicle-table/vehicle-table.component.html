@@ -1,0 +1,50 @@
+<p>Table Header Section</p>
+<br>
+
+<app-file-uploader></app-file-uploader>
+<br>
+
+<kendo-grid 
+[data]="gridView" 
+[height]="400" 
+[filterable]="true"
+[filter]="filter"
+[navigable]="true"
+[pageable]="true" 
+[pageSize]="pageSize" 
+[skip]="skip" 
+(pageChange)="pageChange($event)"
+[loading]="loading"
+(add)="addHandler($event)"
+(edit)="editHandler($event)" (cancel)="cancelHandler($event)"
+(save)="saveHandler($event)" (remove)="removeHandler($event)"
+(filterChange)="filterChange($event)"
+>
+<ng-template kendoGridToolbarTemplate>
+    <button kendoGridAddCommand type="button">Add new</button>
+</ng-template>
+    <kendo-grid-column field="id" title="ID" editor="numeric" [filterable]="false"></kendo-grid-column>
+    <kendo-grid-column field="make" title="Manufactured Company" editor="text" [filterable]="false"></kendo-grid-column>
+    <kendo-grid-column field="model" title="Model" editor="text">
+        <ng-template kendoGridFilterCellTemplate let-filter let-column="column">
+            <kendo-grid-string-filter-cell [showOperators]="false" [column]="column" [filter]="filter">
+            </kendo-grid-string-filter-cell>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-column field="engineNumber" title="Engine Number" editor="text" [filterable]="false"></kendo-grid-column>
+    <kendo-grid-column field="year" title="Made Year" editor="numeric" [filterable]="false"></kendo-grid-column>
+    <kendo-grid-command-column title="command">
+        <ng-template kendoGridCellTemplate let-isNew="isNew">
+            <button kendoGridEditCommand type="button" [primary]="true">
+                Edit
+            </button>
+            <button kendoGridRemoveCommand type="button">Remove</button>
+            <button kendoGridSaveCommand type="button" [disabled]="false">
+                {{ isNew ? "Add" : "Update" }}
+            </button>
+            <button kendoGridCancelCommand type="button">
+                {{ isNew ? "Discard changes" : "Cancel" }}
+            </button>
+        </ng-template>
+    </kendo-grid-command-column>
+</kendo-grid>
